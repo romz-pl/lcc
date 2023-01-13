@@ -1,6 +1,6 @@
 #pragma once
 
-namespace llc {
+namespace lcc {
 
 union Align {
     long l;

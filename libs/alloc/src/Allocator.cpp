@@ -1,14 +1,14 @@
-#include <llc/alloc/Allocator.h>
+#include <lcc/alloc/Allocator.h>
 
-#include <llc/alloc/Align.h>
-#include <llc/alloc/Header.h>
+#include <lcc/alloc/Align.h>
+#include <lcc/alloc/Header.h>
 #include <cassert>
 #include <cstdlib>
 
 #undef roundup
 #define roundup(x,n) (((x)+((n)-1))&(~((n)-1)))
 
-namespace llc {
+namespace lcc {
 void *Allocator::allocate(unsigned long n, unsigned int a)
 {
     Block *ap;

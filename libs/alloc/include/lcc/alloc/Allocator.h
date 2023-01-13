@@ -1,9 +1,9 @@
 #pragma once
 
-#include <llc/alloc/Block.h>
+#include <lcc/alloc/Block.h>
 #include <array>
 
-namespace llc {
+namespace lcc {
 
 class Allocator
 {

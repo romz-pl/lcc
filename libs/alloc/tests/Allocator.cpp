@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include <llc/alloc/Allocator.h>
+#include <lcc/alloc/Allocator.h>
 
-namespace llc::test {
+namespace lcc::test {
 
 TEST(Allocator, allocate)
 {

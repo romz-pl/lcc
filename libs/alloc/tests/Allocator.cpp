@@ -3,11 +3,12 @@
 
 namespace lcc::test {
 
-TEST(Allocator, allocate)
+TEST(Allocator, get)
 {
+    Allocator allocator;
     constexpr unsigned long n{123};
     constexpr unsigned int a{0};
-    void* p = Allocator::allocate(n, a);
+    std::byte* p = allocator.get(n, a);
     ASSERT_TRUE(p != nullptr);
 }
 

@@ -1,22 +1,18 @@
 #pragma once
 
-#include <lcc/alloc/Block.h>
-#include <array>
+#include <lcc/alloc/Arena.h>
 
 namespace lcc {
 
 class Allocator
 {
 public:
-    static void *allocate(unsigned long n, unsigned int a);
-    static void deallocate(unsigned int a);
-    static void *newarray(unsigned long m, unsigned long n, unsigned int a);
+    std::byte* get(std::size_t n, std::size_t a);
 
 private:
-    constexpr static unsigned int blockNo{3U};
+    constexpr static std::size_t arenaNo{3U};
 
-    static inline std::array<Block, blockNo> first;
-    static inline std::array<Block*, blockNo> arena{&first[0], &first[1], &first[2]};
-    static inline Block *freeblocks{nullptr};
+    std::array<Arena, arenaNo> arena;
 };
+
 }

@@ -1,11 +1,23 @@
 #pragma once
 
+#include <array>
+#include <cstddef>
+
 namespace lcc {
 
-struct Block {
-    Block *next{nullptr};
-    char *limit{nullptr};
-    char *avail{nullptr};
+class Block
+{
+public:
+    std::byte* get(std::size_t n);
+
+private:
+    constexpr static std::size_t blockSize{ 10 * 1024 };
+
+    std::array<std::byte, blockSize> buffer;
+
+    std::size_t availableSpace{blockSize};
+
+    std::byte *begin{ buffer.data() };
 };
 
 }

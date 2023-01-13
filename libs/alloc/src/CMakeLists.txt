@@ -1,4 +1,4 @@
-set( LIB_NAME llc-alloc )
+set( LIB_NAME lcc-alloc )
 
 add_library( ${LIB_NAME} STATIC
     Align.cpp

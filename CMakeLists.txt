@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.12)
 enable_language(CXX)
-project(llc)
+project(lcc)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CXX_STANDARD_REQUIRED ON)

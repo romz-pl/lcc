@@ -9,6 +9,7 @@ class Block
 {
 public:
     std::byte* get(std::size_t n);
+    void free();
 
 private:
     constexpr static std::size_t blockSize{ 10 * 1024 };

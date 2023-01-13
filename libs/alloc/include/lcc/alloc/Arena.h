@@ -11,6 +11,7 @@ class Arena
 public:
     Arena();
     std::byte* get(std::size_t n);
+    void free();
 
 private:
     std::list<Block> block;

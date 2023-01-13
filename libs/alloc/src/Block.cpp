@@ -13,4 +13,10 @@ std::byte* Block::get(std::size_t n)
     return begin;
 }
 
+void Block::free()
+{
+    availableSpace = blockSize;
+    begin = buffer.data();
+}
+
 }

@@ -26,4 +26,13 @@ std::byte* Arena::get(std::size_t n)
     return currentBloc->get(n);
 }
 
+void Arena::free()
+{
+    for(Block& b : block)
+    {
+        b.free();
+    }
+    currentBloc = block.begin();
+}
+
 }

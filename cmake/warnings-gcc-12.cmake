@@ -2,7 +2,6 @@ set(LLC_WARNINGS "")
 
 list(APPEND LLC_WARNINGS -Waddress)
 list(APPEND LLC_WARNINGS -Waddress-of-packed-member)
-list(APPEND LLC_WARNINGS -Waggregate-return)
 list(APPEND LLC_WARNINGS -Waggressive-loop-optimizations)
 list(APPEND LLC_WARNINGS -Walloc-zero)
 list(APPEND LLC_WARNINGS -Warray-bounds=1)

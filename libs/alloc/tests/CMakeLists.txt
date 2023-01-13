@@ -9,4 +9,5 @@ target_link_libraries( ${TEST_NAME}
     PUBLIC
     lcc-alloc
     gtest
+    spdlog
 )

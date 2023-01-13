@@ -1,5 +1,6 @@
 #include <lcc/alloc/Arena.h>
 
+#include <spdlog/spdlog.h>
 
 namespace lcc {
 
@@ -11,6 +12,7 @@ Arena::Arena()
 
 std::byte* Arena::get(std::size_t n)
 {
+    spdlog::info("Arena::get, {}", n);
     while(currentBloc != block.end())
     {
         std::byte* p = currentBloc->get(n);
@@ -21,6 +23,7 @@ std::byte* Arena::get(std::size_t n)
         currentBloc++;
     }
 
+    spdlog::info("block.insert, {}", n);
     currentBloc = block.insert( block.end(), Block{} );
 
     return currentBloc->get(n);

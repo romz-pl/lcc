@@ -12,7 +12,12 @@ Arena::Arena()
 
 std::byte* Arena::get(std::size_t n)
 {
-    spdlog::info("Arena::get, {}", n);
+    if(n > Block::blockSize)
+    {
+        spdlog::critical("Arena::get: requested memory ({}) greater than block size ({})", n, Block::blockSize);
+        throw std::bad_alloc{};
+    }
+
     while(currentBloc != block.end())
     {
         std::byte* p = currentBloc->get(n);
@@ -23,7 +28,6 @@ std::byte* Arena::get(std::size_t n)
         currentBloc++;
     }
 
-    spdlog::info("block.insert, {}", n);
     currentBloc = block.insert( block.end(), Block{} );
 
     return currentBloc->get(n);

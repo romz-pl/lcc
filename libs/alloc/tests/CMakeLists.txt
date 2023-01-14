@@ -1,7 +1,7 @@
 set( TEST_NAME alloc-utests )
 
 add_executable( ${TEST_NAME}
-    Allocator.cpp
+    Arena.cpp
     main.cpp
 )
 

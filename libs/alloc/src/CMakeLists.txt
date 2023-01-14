@@ -1,12 +1,10 @@
 set( LIB_NAME lcc-alloc )
 
 add_library( ${LIB_NAME} STATIC
-    Align.cpp
     Allocator.cpp
     Arena.cpp
     Block.cpp
     Global_Arena.cpp
-    Header.cpp
 )
 
 

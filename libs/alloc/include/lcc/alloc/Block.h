@@ -11,6 +11,8 @@ public:
     std::byte* get(std::size_t n);
     void free();
 
+    std::size_t getUsedSpace() const;
+
     constexpr static std::size_t blockSize{ 10 * 1024 };
 
 private:

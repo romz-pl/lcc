@@ -13,6 +13,8 @@ public:
     std::byte* get(std::size_t n);
     void free();
 
+    std::size_t getUsedSpace() const;
+
 private:
     std::list<Block> block;
 

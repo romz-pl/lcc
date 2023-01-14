@@ -1,6 +1,7 @@
 #include <lcc/alloc/Arena.h>
 
 #include <spdlog/spdlog.h>
+#include <numeric>
 
 namespace lcc {
 
@@ -12,6 +13,8 @@ Arena::Arena()
 
 std::byte* Arena::get(std::size_t n)
 {
+    assert(n > 0);
+
     if(n > Block::blockSize)
     {
         spdlog::critical("Arena::get: requested memory ({}) greater than block size ({})", n, Block::blockSize);
@@ -40,6 +43,16 @@ void Arena::free()
         b.free();
     }
     currentBloc = block.begin();
+}
+
+std::size_t Arena::getUsedSpace() const
+{
+    auto plus = [](std::size_t sum, const Block& b)
+    {
+        return sum + b.getUsedSpace();
+    };
+
+    return std::accumulate(block.begin(), block.end(), 0U, plus);
 }
 
 }

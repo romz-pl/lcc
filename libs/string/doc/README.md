@@ -276,3 +276,56 @@ Fast, immutable string interning for C.
 - Fast: intern many millions of strings per second
 - String repository optimization based on frequency analysis (improve locality)
 - Support for snapshots (restore to a previous state)
+
+
+## libstringintern
+From https://github.com/RipcordSoftware/libstringintern
+
+A thread safe lock free C++ library for interning strings to save heap space. Smaller heaps generally
+mean faster applications due to cache locality and less swapping to disk. The other upside 
+is you can store more stuff in RAM.
+
+### Use case
+
+You have an in-memory database with 100 million customer records with associated address details. 
+You therefore have 100 million state and country strings associated with those records. 
+That will use a lot of memory.
+
+When strings are interned you only ever have one instance of the string plus a reference instance per 
+record which is 4 bytes in size.
+
+### How it works
+
+- Interned strings are stored in pages, grouped by string size, a bit like tcmalloc.
+- Pages are 2MB in size to take advantage of THP.
+- Each string is hashed using XX64 with the low order bytes used as an index into the page.
+- If the index refers to a location in the page that is free the string and hash are committed to the page and the caller gets a reference to the string.
+- If the index is already taken then we compare the hashes and if they match we return a reference to the entry.
+- If the hashes did not match then allocate a new page and add the string and hash returning the string reference.
+- The host application turns the reference into a real pointer to use the string, a bit like `std::weak_ptr`.
+- References are 32bit values made up from `PAGE(16):INDEX(16)`. On 64bit systems these use half the storage space of a pointer.
+- Interned strings are immutable.
+
+
+## StringPool
+From https://github.com/danielkrupinski/StringPool
+
+A performant and memory efficient storage for immutable strings with C++17. Supports all standard 
+char types: `char`, `wchar_t`, `char16_t`, `char32_t` and C++20's `char8_t`.
+
+### Motivation
+
+Standard C++ string classes - `std::string`, `std::wstring `etc. - aren't very efficient when it comes to memory 
+usage and allocations. Due to small string optimization a lot of space can be wasted when storing huge amounts 
+of long strings, that don't fit the capacity of the small string buffer. A common allocation strategy that
+`std::basic_string` uses (doubling the capacity when extending the storage) can lead to almost `50%` waste of memory 
+unless `std::basic_string::shrink_to_fit()` is called.
+
+**StringPool** was created to provide a way of storing strings that don't change throughout program 
+execution without excessive memory usage. Furthermore, it combats memory fragmentation by storing strings together, in blocks.
+
+### StringPool doesn't do string interning
+
+**StringPool** doesn't perform any string comparisons, neither it differentiates between two strings - each call 
+to `StringPool<>::add()` gives you a brand new view of the string.
+

@@ -93,6 +93,8 @@ flyweight classes allows us to easily handle documents ranging in the hundreds o
 
 ## StringPool.h from LLVM project
 
+From file https://opensource.apple.com/source/llvmCore/llvmCore-3418.0.80/include/llvm/Support/StringPool.h.auto.html
+
 This file declares an interned string pool, which helps reduce the cost of
 strings by using the same storage for identical strings.
 
@@ -223,3 +225,54 @@ namespace llvm {
 
 #endif
 ```
+
+
+## Boost.Pool
+From https://www.boost.org/doc/libs/1_81_0/libs/pool/doc/html/index.html
+
+### What is Pool?
+
+Pool allocation is a memory allocation scheme that is very fast, but limited in its usage. For more 
+information on pool allocation (also called simple segregated storage, see concepts concepts and Simple Segregated Storage).
+
+### Why should I use Pool?
+
+Using Pools gives you more control over how memory is used in your program. For example, you could have a 
+situation where you want to allocate a bunch of small objects at one point, and then reach a point in your 
+program where none of them are needed any more. Using pool interfaces, you can choose to run their destructors 
+or just drop them off into oblivion; the pool interface will guarantee that there are no system memory leaks.
+
+### When should I use Pool?
+
+Pools are generally used when there is a lot of allocation and deallocation of small objects. Another 
+common usage is the situation above, where many objects may be dropped out of memory.
+
+In general, use Pools when you need a more efficient way to do unusual memory control.
+
+### Which pool allocator should I use?
+
+pool_allocator is a more general-purpose solution, geared towards efficiently servicing requests 
+for any number of contiguous chunks.
+
+fast_pool_allocator is also a general-purpose solution but is geared towards efficiently servicing requests 
+for one chunk at a time; it will work for contiguous chunks, but not as well as pool_allocator.
+
+If you are seriously concerned about performance, use fast_pool_allocator when dealing with containers 
+such as `std::list`, and use pool_allocator when dealing with containers such as `std::vector`. 
+
+
+## Library https://github.com/chriso/intern
+
+Fast, immutable string interning for C.
+
+### What is this?
+
+- A way of assigning a unique integer ID to each unique string, without collisions
+- Two-way lookup: ID => string, string => ID
+- Each string is stored only once in memory
+- Optional inlining of unsigned integer strings
+- Very low fragmentation via a custom block allocator
+- Minimal overhead per string: currently ~40 bytes, which could be lower at the cost of additional fragmentation
+- Fast: intern many millions of strings per second
+- String repository optimization based on frequency analysis (improve locality)
+- Support for snapshots (restore to a previous state)

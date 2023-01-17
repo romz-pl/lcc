@@ -6,15 +6,15 @@
 //
 //===----------------------------------------------------------------------===//
 
+#include <lcc/string/PooledStringPtr.h>
 #include <lcc/string/StringPool.h>
 #include "gtest/gtest.h"
 
-using namespace __orc_rt;
-
 namespace {
 
-TEST(StringPool, UniquingAndComparisons) {
-  StringPool SP;
+TEST(StringPool, UniquingAndComparisons)
+{
+  lcc::StringPool SP;
   auto P1 = SP.intern("hello");
 
   std::string S("hel");
@@ -32,14 +32,16 @@ TEST(StringPool, UniquingAndComparisons) {
   (void)(P1 < P3);
 }
 
-TEST(StringPool, Dereference) {
-  StringPool SP;
+TEST(StringPool, Dereference)
+{
+  lcc::StringPool SP;
   auto Foo = SP.intern("foo");
   EXPECT_EQ(*Foo, "foo") << "Equality on dereferenced string failed";
 }
 
-TEST(StringPool, ClearDeadEntries) {
-  StringPool SP;
+TEST(StringPool, ClearDeadEntries)
+{
+  lcc::StringPool SP;
   {
     auto P1 = SP.intern("s1");
     SP.clearDeadEntries();
@@ -49,18 +51,20 @@ TEST(StringPool, ClearDeadEntries) {
   EXPECT_TRUE(SP.empty()) << "pool should be empty";
 }
 
-TEST(StringPool, NullPtr) {
+TEST(StringPool, NullPtr)
+{
   // Make sure that we can default construct and then destroy a null
   // PooledStringPtr.
-  PooledStringPtr Null;
+  lcc::PooledStringPtr Null;
 }
 
-TEST(StringPool, Hashable) {
-  StringPool SP;
-  PooledStringPtr P1 = SP.intern("s1");
-  PooledStringPtr Null;
-  EXPECT_NE(std::hash<PooledStringPtr>()(P1),
-            std::hash<PooledStringPtr>()(Null));
+TEST(StringPool, Hashable)
+{
+  lcc::StringPool SP;
+  lcc::PooledStringPtr P1 = SP.intern("s1");
+  lcc::PooledStringPtr Null;
+  EXPECT_NE(std::hash<lcc::PooledStringPtr>()(P1),
+            std::hash<lcc::PooledStringPtr>()(Null));
 }
 
 } // end anonymous namespace

@@ -1,6 +1,7 @@
 set( LIB_NAME lcc-string )
 
 add_library( ${LIB_NAME} STATIC
+    StringPool.cpp
     string.cpp
 )
 

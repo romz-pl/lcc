@@ -1,6 +1,6 @@
 #include <lcc/string/StringPool.h>
 
-#include <lcc/string/PooledStringPtr.h>
+#include <lcc/string/PooledString.h>
 
 namespace lcc {
 
@@ -11,13 +11,13 @@ StringPool::~StringPool() {
 #endif // NDEBUG
 }
 
-PooledStringPtr StringPool::intern(std::string S)
+PooledString StringPool::intern(std::string S)
 {
   std::lock_guard<std::mutex> Lock(PoolMutex);
   PoolMap::iterator I;
   bool Added;
   std::tie(I, Added) = Pool.try_emplace(std::move(S), 0);
-  return PooledStringPtr(&*I);
+  return PooledString(&*I);
 }
 
 void StringPool::clearDeadEntries()

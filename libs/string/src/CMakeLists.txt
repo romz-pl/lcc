@@ -2,7 +2,7 @@ set( LIB_NAME lcc-string )
 
 add_library( ${LIB_NAME} STATIC
     StringPool.cpp
-    PooledStringPtr.cpp
+    PooledString.cpp
     string.cpp
 )
 

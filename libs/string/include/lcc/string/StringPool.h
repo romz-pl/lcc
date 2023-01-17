@@ -21,18 +21,18 @@
 
 namespace lcc {
 
-class PooledStringPtr;
+class PooledString;
 
 /// String pool for strings names used by the ORC runtime.
 class StringPool {
-  friend class PooledStringPtr;
+  friend class PooledString;
 
 public:
   /// Destroy a StringPool.
   ~StringPool();
 
   /// Create a string pointer from the given string.
-  PooledStringPtr intern(std::string S);
+  PooledString intern(std::string S);
 
   /// Remove from the pool any entries that are no longer referenced.
   void clearDeadEntries();

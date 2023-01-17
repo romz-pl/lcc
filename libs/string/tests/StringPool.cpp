@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include <lcc/string/PooledStringPtr.h>
+#include <lcc/string/PooledString.h>
 #include <lcc/string/StringPool.h>
 #include "gtest/gtest.h"
 
@@ -28,7 +28,7 @@ TEST(StringPool, UniquingAndComparisons)
 
   // We want to test that less-than comparison of PooledStringPtrs compiles,
   // however we can't test the actual result as this is a pointer comparison and
-  // PooledStringPtr doesn't expose the underlying address of the string.
+  // PooledString doesn't expose the underlying address of the string.
   (void)(P1 < P3);
 }
 
@@ -54,17 +54,17 @@ TEST(StringPool, ClearDeadEntries)
 TEST(StringPool, NullPtr)
 {
   // Make sure that we can default construct and then destroy a null
-  // PooledStringPtr.
-  lcc::PooledStringPtr Null;
+  // PooledString.
+  lcc::PooledString Null;
 }
 
 TEST(StringPool, Hashable)
 {
   lcc::StringPool SP;
-  lcc::PooledStringPtr P1 = SP.intern("s1");
-  lcc::PooledStringPtr Null;
-  EXPECT_NE(std::hash<lcc::PooledStringPtr>()(P1),
-            std::hash<lcc::PooledStringPtr>()(Null));
+  lcc::PooledString P1 = SP.intern("s1");
+  lcc::PooledString Null;
+  EXPECT_NE(std::hash<lcc::PooledString>()(P1),
+            std::hash<lcc::PooledString>()(Null));
 }
 
 } // end anonymous namespace

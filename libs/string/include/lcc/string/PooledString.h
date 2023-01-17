@@ -54,27 +54,13 @@ public:
   }
 
 private:
-  using PoolEntry = StringPool::PoolMapEntry;
-  using PoolEntryPtr = PoolEntry *;
-
   PooledString(StringPool::PoolMapEntry *S) : S(S) {
     if (S)
       ++S->second;
   }
 
-  PoolEntryPtr S = nullptr;
+  StringPool::PoolMapEntry* S = nullptr;
 };
 
 }
 
-
-namespace std {
-
-// Make PooledStringPtrs hashable.
-template <> struct hash<lcc::PooledString> {
-  size_t operator()(const lcc::PooledString &A) const {
-    return hash<lcc::PooledString::PoolEntryPtr>()(A.S);
-  }
-};
-
-} // namespace std

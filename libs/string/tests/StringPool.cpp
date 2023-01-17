@@ -58,13 +58,4 @@ TEST(StringPool, NullPtr)
   lcc::PooledString Null;
 }
 
-TEST(StringPool, Hashable)
-{
-  lcc::StringPool SP;
-  lcc::PooledString P1 = SP.intern("s1");
-  lcc::PooledString Null;
-  EXPECT_NE(std::hash<lcc::PooledString>()(P1),
-            std::hash<lcc::PooledString>()(Null));
-}
-
 } // end anonymous namespace

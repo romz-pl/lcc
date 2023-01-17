@@ -25,11 +25,6 @@ TEST(StringPool, UniquingAndComparisons)
 
   EXPECT_EQ(P1, P2) << "Failed to unique entries";
   EXPECT_NE(P1, P3) << "Unequal pooled strings comparing equal";
-
-  // We want to test that less-than comparison of PooledStringPtrs compiles,
-  // however we can't test the actual result as this is a pointer comparison and
-  // PooledString doesn't expose the underlying address of the string.
-  (void)(P1 < P3);
 }
 
 TEST(StringPool, Dereference)

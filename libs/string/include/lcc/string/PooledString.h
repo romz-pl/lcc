@@ -48,11 +48,6 @@ public:
     return !(LHS == RHS);
   }
 
-  friend bool operator<(const PooledString &LHS,
-                        const PooledString &RHS) {
-    return LHS.S < RHS.S;
-  }
-
 private:
   PooledString(StringPool::PoolMapEntry *S) : S(S) {
     if (S)

@@ -15,13 +15,10 @@ namespace {
 TEST(StringPool, UniquingAndComparisons)
 {
   lcc::StringPool SP;
-  auto P1 = SP.intern("hello");
-
-  std::string S("hel");
-  S += "lo";
-  auto P2 = SP.intern(S);
-
-  auto P3 = SP.intern("goodbye");
+  const std::string hello{"hello"};
+  lcc::PooledString P1 = SP.intern(hello);
+  lcc::PooledString P2 = SP.intern(hello);
+  lcc::PooledString P3 = SP.intern("goodbye");
 
   EXPECT_EQ(P1, P2) << "Failed to unique entries";
   EXPECT_NE(P1, P3) << "Unequal pooled strings comparing equal";
@@ -29,19 +26,21 @@ TEST(StringPool, UniquingAndComparisons)
 
 TEST(StringPool, Dereference)
 {
+  const std::string Txt{"foo"};
   lcc::StringPool SP;
-  auto Foo = SP.intern("foo");
-  EXPECT_EQ(*Foo, "foo") << "Equality on dereferenced string failed";
+  lcc::PooledString Foo = SP.intern(Txt);
+  EXPECT_EQ(*Foo, Txt) << "Equality on dereferenced string failed";
 }
 
 TEST(StringPool, ClearDeadEntries)
 {
   lcc::StringPool SP;
   {
-    auto P1 = SP.intern("s1");
+    lcc::PooledString P1 = SP.intern("s1");
     SP.clearDeadEntries();
     EXPECT_FALSE(SP.empty()) << "\"s1\" entry in pool should still be retained";
   }
+  EXPECT_FALSE(SP.empty()) << "pool should not be empty";
   SP.clearDeadEntries();
   EXPECT_TRUE(SP.empty()) << "pool should be empty";
 }

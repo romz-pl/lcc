@@ -29,6 +29,9 @@
 #include <type_traits>
 #include <utility>
 
+#define LLVM_LIKELY(EXPR) __builtin_expect((bool)(EXPR), true)
+#define LLVM_UNLIKELY(EXPR) __builtin_expect((bool)(EXPR), false)
+
 namespace lcc {
 
 template <typename T> class ArrayRef;
@@ -187,7 +190,7 @@ protected:
   }
 
   /// Check whether Elt will be invalidated by resizing the vector to NewSize.
-  void assertSafeToReferenceAfterResize(const void *Elt, size_t NewSize) {
+  void assertSafeToReferenceAfterResize(const void */*Elt*/, size_t /*NewSize*/) {
     assert(isSafeToReferenceAfterResize(Elt, NewSize) &&
            "Attempting to reference an element of the vector in an operation "
            "that invalidates it");

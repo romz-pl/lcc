@@ -4,6 +4,8 @@ add_library( ${LIB_NAME} STATIC
     Arena.cpp
     Block.cpp
     Global_Arena.cpp
+    MemAlloc.cpp
+    error_handler.cpp
 )
 
 
